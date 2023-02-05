@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Texy;
 
+use Nette\Utils\Strings;
+
 
 /**
  * Helpers.
@@ -110,6 +112,9 @@ final class Helpers
 	 */
 	public static function webalize(string $s, string $charlist = ''): string
 	{
+		if (class_exists(Strings::class)) {
+			return Strings::webalize($s, $charlist);
+		}
 		$s = self::toAscii($s);
 		$s = strtolower($s);
 		$s = Regexp::replace($s, '#[^a-z0-9' . preg_quote($charlist, '#') . ']+#', '-');
